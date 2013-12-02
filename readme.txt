@@ -4,7 +4,7 @@ Donate link: http://binarystash.blogspot.com/
 Tags: flip book, flipbook, booklet
 Requires at least: 3.5
 Tested up to: 3.7
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,7 +57,7 @@ Stable version
 
 == Credits ==
 
-image 1 - http://www.publicdomainpictures.net/view-image.php?image=63350&picture=agapanthus-buds
-image 2 - http://www.publicdomainpictures.net/view-image.php?image=63355&picture=alyssum
-image 3 - http://www.publicdomainpictures.net/view-image.php?image=63356&picture=stylized-background-fabric-31
-image 4 - http://www.publicdomainpictures.net/view-image.php?image=63352&picture=surface-of-rock
+*image 1 - http://www.publicdomainpictures.net/view-image.php?image=63350&picture=agapanthus-buds
+*image 2 - http://www.publicdomainpictures.net/view-image.php?image=63355&picture=alyssum
+*image 3 - http://www.publicdomainpictures.net/view-image.php?image=63356&picture=stylized-background-fabric-31
+*image 4 - http://www.publicdomainpictures.net/view-image.php?image=63352&picture=surface-of-rock
