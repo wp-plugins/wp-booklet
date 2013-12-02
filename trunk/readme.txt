@@ -22,8 +22,8 @@ This section describes how to install the plugin and get it working.
 
 e.g.
 
-1. Upload the plugin folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+1. Upload the plugin folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Create your flip books under 'Booklets'.
 4. Use the provided shortcode.
 
@@ -54,3 +54,10 @@ Answer to foo bar dilemma.
 
 = 1.0 =
 Stable version
+
+== Credits ==
+
+image 1 - http://www.publicdomainpictures.net/view-image.php?image=63350&picture=agapanthus-buds
+image 2 - http://www.publicdomainpictures.net/view-image.php?image=63355&picture=alyssum
+image 3 - http://www.publicdomainpictures.net/view-image.php?image=63356&picture=stylized-background-fabric-31
+image 4 - http://www.publicdomainpictures.net/view-image.php?image=63352&picture=surface-of-rock
