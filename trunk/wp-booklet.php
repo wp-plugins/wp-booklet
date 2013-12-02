@@ -3,7 +3,7 @@
  * Plugin Name: WP Booklet
  * Plugin URI: http://binarystash.blogspot.com/2013/11/wp-booklet.html
  * Description: Allows creation of flip books using the jQuery Booklet plugin
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: BinaryStash
  * Author URI:  binarystash.blogspot.com
  * License: GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html)
