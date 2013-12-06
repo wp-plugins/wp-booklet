@@ -37,7 +37,7 @@ class WP_Booklet {
 		add_action( 'admin_enqueue_scripts', array( &$this, 'include_admin_scripts' ) );
 		
 		//Include frontend scripts
-		add_action( 'wp_enqueue_scripts', array( &$this, 'include_frontend_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( &$this, 'include_frontend_scripts' ), 100 );
 		
 		//Add shortcode
 		add_shortcode ( 'wp-booklet', array( &$this, 'process_shortcode') );
