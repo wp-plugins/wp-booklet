@@ -4,7 +4,7 @@ Donate link: http://binarystash.blogspot.com/
 Tags: flip book, flipbook, booklet
 Requires at least: 3.5
 Tested up to: 3.7
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,9 +37,6 @@ You can override the style in your style.css
 
 Not yet.
 
-
-Answer to foo bar dilemma.
-
 == Screenshots ==
 
 1. Administration screen
@@ -50,10 +47,16 @@ Answer to foo bar dilemma.
 = 1.0 =
 * Stable version
 
+= 1.0.4 =
+* Fixed a bug on themes with multiple jQuery versions
+
 == Upgrade Notice ==
 
 = 1.0 =
 Stable version
+
+= 1.0.4 =
+* Fixed a bug on themes with multiple jQuery versions
 
 == Image credits ==
 
