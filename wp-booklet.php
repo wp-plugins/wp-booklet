@@ -3,7 +3,7 @@
  * Plugin Name: WP Booklet
  * Plugin URI: http://binarystash.blogspot.com/2013/11/wp-booklet.html
  * Description: Allows creation of flip books using the jQuery Booklet plugin
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: BinaryStash
  * Author URI:  binarystash.blogspot.com
  * License: GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -104,6 +104,7 @@ class WP_Booklet {
 		$meta = get_post_custom($id);
 		$pages = maybe_unserialize( $meta['wp_booklet_pages'][0] );
 		$properties = maybe_unserialize( $meta['wp_booklet_metas'][0] );
+		$pages_properties = maybe_unserialize( $meta['wp_booklet_pages_properties'][0] );
 		
 		if ( empty( $pages ) ) {
 			echo "Booklet is empty or it doesn't exist.";
@@ -114,10 +115,19 @@ class WP_Booklet {
 		?>
 			<div>
 				<div id="wp-booklet-<?php echo $id ?>">
-					<?php foreach ( $pages as $page ) : ?>
+					<?php foreach ( $pages as $key=>$page ) : ?>
 						<div class="page">
-							<?php $image = wp_get_attachment_image_src( $page, 'large' ) ?>
-							<img src="<?php echo $image[0] ?>" alt=""/>
+							<?php 
+								$image = wp_get_attachment_image_src( $page, 'large' );
+								$link = $pages_properties[$key]['wp-booklet-page-link'];
+							?>
+							<?php if ( $link != "" ) : ?>
+							<a href="<?php echo $pages_properties[$key]['wp-booklet-page-link'] ?>">
+							<?php endif ?>
+								<img src="<?php echo $image[0] ?>" alt=""/>
+							<?php if ( $link != "" ) : ?>
+							</a>
+							<?php endif ?>
 						</div>
 					<?php endforeach ?>
 				</div>
@@ -136,6 +146,15 @@ class WP_Booklet {
 							pageNumbers:<?php echo $properties['wp-booklet-pagenumbers']  ?>,
 							closed:<?php echo $properties['wp-booklet-closed'] ?>
 						});
+						
+						jQuery("#wp-booklet-<?php echo $id ?> a").hover(
+							function(e) {
+								jQuery(e.currentTarget).animate({opacity:0.7},250);
+							},
+							function(e) {
+								jQuery(e.currentTarget).animate({opacity:1},250);
+							}
+						);
 					});
 				</script>
 			</div>
@@ -193,10 +212,14 @@ class WP_Booklet {
 			foreach ( $_POST['wp-booklet-attachment'] as $key => $attachment ) {
 				if ( !empty($attachment) ) {
 					$pages[] = sanitize_text_field( $attachment );
+					$pages_properties[$key]['wp-booklet-page-link'] = sanitize_text_field( $_POST['wp-booklet-attachment-properties']['wp-booklet-page-link'][$key] );
 				}
 			}
 			delete_post_meta( $post_id, 'wp_booklet_pages' );
 			update_post_meta( $post_id, 'wp_booklet_pages', $pages );
+			
+			delete_post_meta( $post_id, 'wp_booklet_pages_properties' );
+			update_post_meta( $post_id, 'wp_booklet_pages_properties', $pages_properties );
 		}
 		
 		//Save properties
@@ -251,10 +274,12 @@ class WP_Booklet {
 		//TODO: Move to template file
 		$meta = get_post_custom($post->ID);
 		$pages = maybe_unserialize( $meta['wp_booklet_pages'][0] );
+		$pages_properties = maybe_unserialize( $meta['wp_booklet_pages_properties'][0] );
+		
 		?>
 		<div class="wp-booklet-sortable">
 		<?php if ( $pages ) : ?>
-			<?php foreach( $pages as $page ) : ?>
+			<?php foreach( $pages as $key => $page ) : ?>
 					<div class="wp-booklet-portlet">
 						<div class="wp-booklet-portlet-header">
 							Page
@@ -263,10 +288,19 @@ class WP_Booklet {
 								<span class="wp-booklet-header-remove"></span>
 							</span>
 						</div>
-						<div class="wp-booklet-portlet-content" style="display:block">
-							<?php $image = wp_get_attachment_image_src( $page, $size, $icon ); ?> 
-							<img src="<?php echo $image[0] ?>" class="wp-booklet-img"/>
-							<input class="wp-booklet-attachment-id" value="<?php echo $page ?>" name="wp-booklet-attachment[]" type="hidden"/>
+						<div class="wp-booklet-portlet-content">
+							<div class="wp-booklet-portlet-content-left">
+								<?php $image = wp_get_attachment_image_src( $page, $size, $icon ); ?> 
+								<img src="<?php echo $image[0] ?>" class="wp-booklet-img"/>
+								<input class="wp-booklet-attachment-id" value="<?php echo $page ?>" name="wp-booklet-attachment[]" type="hidden"/>
+							</div>
+							<div class="wp-booklet-portlet-content-right">
+								<p>
+									<label>Page Link</label><br/>
+									<input class="widefat" type="text" value="<?php echo $pages_properties[$key]['wp-booklet-page-link'] ?>" name="wp-booklet-attachment-properties[wp-booklet-page-link][]"/>
+								</p>
+							</div>
+							<div class="clearfix"></div>
 							<input class="button-secondary wp-booklet-image-upload" type="button" value="Replace image"/>
 						</div>
 					</div>
@@ -280,8 +314,8 @@ class WP_Booklet {
 				/* Sortable */
 				jQuery(".wp-booklet-sortable").sortable();
 				
-				jQuery("body").on('click','.wp-booklet-sortable .wp-booklet-portlet-header .wp-booklet-header-visibility', function(e){
-					jQuery(e.currentTarget).parents(".wp-booklet-portlet").find(".wp-booklet-portlet-content").toggle();
+				jQuery("body").on('click','.wp-booklet-sortable .wp-booklet-portlet-header', function(e){
+					jQuery(e.currentTarget).parent().toggleClass("wp-booklet-portlet-hidden");
 				});
 				
 				jQuery(".wp-booklet-sortable-add-page").on('click', function(e) {
@@ -293,9 +327,19 @@ class WP_Booklet {
 											'<span class="wp-booklet-header-remove"></span>' +
 										'</span>' +
 									'</div>' +
-									'<div class="wp-booklet-portlet-content" style="display:block">' +
-										'<input class="wp-booklet-attachment-id" name="wp-booklet-attachment[]" type="hidden"/>' +
-										'<input class="button-secondary wp-booklet-image-upload" type="button" value="Upload image"/>' +
+									'<div class="wp-booklet-portlet-content">' +
+										'<div class="wp-booklet-portlet-content-left">' +
+											'<div class="wp-booklet-page-placeholder"></div>' +
+											'<input class="wp-booklet-attachment-id" name="wp-booklet-attachment[]" type="hidden"/>' +
+											'<input class="button-secondary wp-booklet-image-upload" type="button" value="Upload image"/>' +
+										'</div>' +
+										'<div class="wp-booklet-portlet-content-right">' +
+											'<p>' +
+												'<label>Page Link</label><br/>' +
+												'<input class="widefat" type="text" value="" name="wp-booklet-attachment-properties[wp-booklet-page-link][]"/>' +
+											'</p>' +
+										'</div>' +
+										'<div class="clearfix"></div>' +
 									'</div>' +
 								'</div>';
 					jQuery(".wp-booklet-sortable").append(newPage);
@@ -342,12 +386,12 @@ class WP_Booklet {
 							current_page.find('.wp-booklet-img').attr('src',media_attachment.url);
 						}
 						else {
-							current_page.prepend('<img src='+media_attachment.url+' class="wp-booklet-img"/> ');
+							current_page.find('.wp-booklet-portlet-content-left').prepend('<img src='+media_attachment.url+' class="wp-booklet-img"/> ');
 						}
 						
 						current_page.find('.wp-booklet-attachment-id').val(media_attachment.id);
 						current_page.find('.wp-booklet-image-upload').val('Replace image');
-						
+						current_page.find('.wp-booklet-page-placeholder').remove();
 					});
 					
 					current_page_frame.open();
@@ -360,31 +404,27 @@ class WP_Booklet {
 			}
 			
 			.wp-booklet-sortable .ui-sortable-placeholder { 
-				border: 1px dashed #bbbbbb !important; 
 				visibility: visible !important;
-				background:#f5f5f5 !important;
+				background:transparent !important;
+				border-style:dashed !important;
 			}
 			.wp-booklet-sortable .wp-booklet-portlet-header {
 				background: linear-gradient(to top, #ECECEC, #F9F9F9) repeat scroll 0 0 #F1F1F1;
 				padding:5px;
-				border-bottom-width: 1px;
-				border-bottom-color: #DFDFDF;
-				box-shadow: 0 1px 0 #FFFFFF;
 				text-shadow: 0 1px 0 #FFFFFF;
-				border-top-left-radius: 3px;
-				border-top-right-radius: 3px;
 				cursor:move;
 			}
 			
 			.wp-booklet-sortable .wp-booklet-portlet {
 				border:1px solid #DFDFDF;
 				margin-bottom:5px;
-				background:linear-gradient(to top, #F5F5F5, #F9F9F9) repeat scroll 0 0 #F5F5F5;
+				background:#F1F1F1;
 			}
 			
 			.wp-booklet-sortable .wp-booklet-portlet-content {
-				display:none;
+				border-top:1px solid #DFDFDF;
 				padding:10px;
+				background:linear-gradient(to top, #F5F5F5, #F9F9F9) repeat scroll 0 0 #F5F5F5;
 			}
 			
 			.wp-booklet-sortable .wp-booklet-portlet-header-buttons {
@@ -392,8 +432,12 @@ class WP_Booklet {
 				float:right;
 			}
 			
+			.wp-booklet-sortable .wp-booklet-portlet-header-buttons * {
+				vertical-align:middle;
+			}
+			
 			.wp-booklet-sortable .wp-booklet-img {
-				width:250px;
+				width:100%;
 				display:block;
 				margin-bottom:10px;
 			}
@@ -402,23 +446,66 @@ class WP_Booklet {
 				display:inline-block;
 				width:15px;
 				height:15px;
-				background:url("../wp-includes/images/uploader-icons.png") -100px 0 no-repeat;
+				background:url("../wp-content/plugins/wp-booklet/images/admin/icon-close.png") 0 no-repeat;
 				cursor:pointer;
 			}
 			
 			.wp-booklet-sortable .wp-booklet-header-visibility {
 				display:inline-block;
 				width:17px;
-				height:15px;
+				height:8px;
 				margin-right:10px;
 				cursor:pointer;
-				background:url("../wp-includes/images/down_arrow-2x.gif") 0 -13px no-repeat;
+				background:url("../wp-content/plugins/wp-booklet/images/admin/icon-arrows.png") 0 0 no-repeat;
+			}
+			
+			.wp-booklet-portlet-hidden .wp-booklet-header-visibility {
+				background-position:0 -8px;
+			}
+			
+			.wp-booklet-sortable .wp-booklet-portlet-content-left {
+				width:30%;
+				float:left;
+			}
+			
+			.wp-booklet-sortable .wp-booklet-portlet-content-right {
+				width:68%;
+				float:right;
+			}
+			
+			.wp-booklet-sortable .clearfix {
+				clear:both;
+			}
+			
+			.wp-booklet-sortable .wp-booklet-page-placeholder {
+				width:100%;
+				min-height:33px;
 			}
 			
 			#minor-publishing-actions,
 			#misc-publishing-actions {
 				display:none;
 			}
+			
+			.wp-booklet-portlet-hidden .wp-booklet-portlet-content {
+				display:none;
+			}
+			
+			/* For Wordpress 3.8+ */
+			
+			<?php if ( get_bloginfo("version") >= 3.8 ) : ?>
+			
+			.wp-booklet-sortable .wp-booklet-portlet-header,
+			.wp-booklet-sortable .wp-booklet-portlet-content {
+				background:transparent !important;
+			}
+			
+			.wp-booklet-sortable .wp-booklet-portlet {
+				background:#fff !important;
+			}
+			
+			<?php endif ?>
+			
 		</style>
 		<?php
 		

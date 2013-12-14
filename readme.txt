@@ -3,8 +3,8 @@ Contributors: binarystash01
 Donate link: http://binarystash.blogspot.com/
 Tags: flip book, flipbook, booklet
 Requires at least: 3.5
-Tested up to: 3.7
-Stable tag: 1.0.4
+Tested up to: 3.8
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ Not yet.
 = 1.0.4 =
 * Fixed a bug on themes with multiple jQuery versions
 
+= 1.0.5 = 
+* UI enhancements
+* Added ability to add page links
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -57,6 +61,10 @@ Stable version
 
 = 1.0.4 =
 * Fixed a bug on themes with multiple jQuery versions
+
+= 1.0.5 = 
+
+* The ability to add page links was added.
 
 == Image credits ==
 
