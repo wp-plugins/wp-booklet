@@ -84,6 +84,10 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 * Fixed padding reverting to 10px when set to 0
 * Added test for uploads folder's writability
 
+= 1.0.8 = 
+* Fixed empty pages when PDF has less than 10 pages and PDF limit is on
+
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -106,6 +110,9 @@ Stable version
 * UI enhancements
 * Fixed padding reverting to 10px when set to 0
 * Added test for uploads folder's writability
+
+= 1.0.8 = 
+* Fixed empty pages when PDF has less than 10 pages and PDF limit is on
 
 == Image credits ==
 
