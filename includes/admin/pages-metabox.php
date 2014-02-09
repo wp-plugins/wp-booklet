@@ -29,7 +29,7 @@
 	<?php endif ?>
 </div>
 <a class="button wp-booklet-sortable-add-pages">Add pages</a>
-<?php if ( $gs_ready && $im_ready && $writable ) : ?>
+<?php if ( $pdf_capable ) : ?>
 <a class="button wp-booklet-sortable-upload-pdf">Upload PDF</a>
 <?php endif ?>
 <div class="wp-booklet-preloader-overlay"><div class="wp-booklet-preloader-note"></div></div>	
