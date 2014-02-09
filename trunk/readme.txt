@@ -4,7 +4,7 @@ Donate link: http://binarystash.blogspot.com/
 Tags: flip book, flipbook, booklet
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,7 +45,7 @@ WP Booklet relies on Ghostscript and Imagemagick for PDF conversion. If you can'
 
 You also need to ensure that your uploads folder is writable by the web server. Check this status under Booklet->Settings.
 
-If you don't know how to reconfigure your server, please contact your web administrator.
+If problems persist despite having proper configurations for the items above, please contact your web administrator or hosting provider.
 
 = Why can't I convert more than 10 pages of my PDF? =
 
@@ -87,6 +87,8 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 = 1.0.8 = 
 * Fixed empty pages when PDF has less than 10 pages and PDF limit is on
 
+= 1.0.9 = 
+* PDF testing now involves creating a PDF file and checking for its existence.
 
 == Upgrade Notice ==
 
@@ -113,6 +115,9 @@ Stable version
 
 = 1.0.8 = 
 * Fixed empty pages when PDF has less than 10 pages and PDF limit is on
+
+= 1.0.9 = 
+* PDF testing now involves creating a PDF file and checking for its existence.
 
 == Image credits ==
 

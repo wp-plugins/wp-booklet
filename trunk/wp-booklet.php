@@ -3,7 +3,7 @@
  * Plugin Name: WP Booklet
  * Plugin URI: http://binarystash.blogspot.com/2013/11/wp-booklet.html
  * Description: Allows creation of flip books using the jQuery Booklet plugin
- * Version: 1.0.8
+ * Version: 1.0.9
  * Author: BinaryStash
  * Author URI:  binarystash.blogspot.com
  * License: GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -70,6 +70,7 @@ class WP_Booklet {
 		
 		//Verify PDF
         add_action('wp_ajax_verify_pdf', array(&$this,'verify_pdf') );
+		
 	}
 	
 	function booklet_settings_page() {
@@ -109,7 +110,10 @@ class WP_Booklet {
 		if ( is_writable($upload_path) ) {
 			$writable = "Yes";
 		}
-	
+		
+		//Do the actual test
+		$actual_test = $this->_can_produce_pdf();
+		
 		include WP_BOOKLET_DIR . "/includes/admin/settings-page.php";
 	}
 	
@@ -127,6 +131,25 @@ class WP_Booklet {
 		}
 		echo json_encode($result);
 		die();
+	}
+	
+	private function _can_produce_pdf() {
+		$wp_upload_dir = wp_upload_dir();
+		$upload_path = $wp_upload_dir['path'];
+		
+		$pdf = WP_BOOKLET_DIR . 'pdf/test.pdf';
+		$target = $upload_path . '/wp-booklet-test-' . uniqid() . '.jpg';
+		
+		$result = $this->_run_command("convert -limit memory 32MiB -limit map 64MiB {$pdf} {$target}");
+		
+		if ( !$result['error'] ) {
+			return false;
+		}
+		else {
+			$file_exists = file_exists( $target );
+			@unlink( $target );
+			return $file_exists;
+		}
 	}
 	
 	function process_pdf() {
@@ -149,7 +172,14 @@ class WP_Booklet {
 		}
 		
 		//Use Imagemagick and Ghostscript to convert PDF pages into jpegs
-		exec("convert -limit memory 32MiB -limit map 64MiB {$pdf_path}[0-9] {$upload_path}/{$image_group}.jpg");
+		$operation = $this->_run_command("convert -verbose -limit memory 32MiB -limit map 64MiB {$pdf_path}[0-9] {$upload_path}/{$image_group}.jpg");
+		if ( $operation['error'] ) {
+			echo json_encode( array(
+				'wpb_success'=>false,
+				'wpb_message'=>'An unknown error occurred.'
+			));
+			die;
+		}
 		
 		//Fill this array with new attachments
 		$images = array();
@@ -401,19 +431,8 @@ class WP_Booklet {
 		$pages = maybe_unserialize( $meta['wp_booklet_pages'][0] );
 		$pages_properties = maybe_unserialize( $meta['wp_booklet_pages_properties'][0] );
 		
-		//Check Ghostscript status
-		$status_win = $this->_run_command("gswin32c -v");
-		$status_linux = $this->_run_command("gs -v");		
-		$gs_ready = !$status_win['error'] || !$status_linux['error'];
-		
-		//Check Imagemagick status
-		$status = $this->_run_command("convert -version");
-		$im_ready = !$status['error'];
-		
-		//Is uploads folder writable by web server?
-		$upload_dir = wp_upload_dir();
-		$upload_path = $upload_dir['path'];
-		$writable = is_writable($upload_path);
+		//Can produce PDF?
+		$pdf_capable = $this->_can_produce_pdf();
 		
 		include WP_BOOKLET_DIR . "/includes/admin/pages-metabox.php";
 	}
