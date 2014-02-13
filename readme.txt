@@ -17,6 +17,7 @@ Flip books are useful for creating photo albums, brochures, and other promotiona
 This Wordpress plugin provides a friendly user interface for configuring your flip books and displaying them anywhere on your Wordpress site using a shortcode. Unlike other plugins, WP Booklet works on desktop and mobile devices.
 
 Highlights
+
 * PDF uploads
 * Bulk image uploads
 * Page thumbnails
