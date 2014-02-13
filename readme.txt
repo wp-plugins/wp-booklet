@@ -4,7 +4,7 @@ Donate link: http://binarystash.blogspot.com/
 Tags: flip book, flipbook, booklet
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 1.0.9
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,12 @@ Allows creation of flip books using the jQuery Booklet plugin
 Flip books are useful for creating photo albums, brochures, and other promotional materials. WP Booklet is a Wordpress plugin that allows you to create them using jQuery Booklet.
 
 This Wordpress plugin provides a friendly user interface for configuring your flip books and displaying them anywhere on your Wordpress site using a shortcode. Unlike other plugins, WP Booklet works on desktop and mobile devices.
+
+Highlights
+* PDF uploads
+* Bulk image uploads
+* Page thumbnails
+* Compatible with mobile devices
 
 == Installation ==
 
@@ -90,6 +96,9 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 = 1.0.9 = 
 * PDF testing now involves creating a PDF file and checking for its existence.
 
+= 1.1.0 = 
+* Fixed shortcode
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -118,6 +127,9 @@ Stable version
 
 = 1.0.9 = 
 * PDF testing now involves creating a PDF file and checking for its existence.
+
+= 1.1.0 = 
+* Fixed shortcode
 
 == Image credits ==
 
