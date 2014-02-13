@@ -21,7 +21,7 @@ WP Booklet provides the following features.
 *   PDF uploads
 *   Bulk image uploads
 *   Page thumbnails
-*   Compatible with mobile devices
+*   Compatibility with mobile devices
 
 == Installation ==
 
