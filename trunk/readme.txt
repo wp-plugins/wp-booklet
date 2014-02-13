@@ -18,10 +18,10 @@ This Wordpress plugin provides a friendly user interface for configuring your fl
 
 Highlights
 
-* PDF uploads
-* Bulk image uploads
-* Page thumbnails
-* Compatible with mobile devices
+*   PDF uploads
+*   Bulk image uploads
+*   Page thumbnails
+*   Compatible with mobile devices
 
 == Installation ==
 
