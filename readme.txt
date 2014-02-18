@@ -4,7 +4,7 @@ Donate link: http://binarystash.blogspot.com/
 Tags: flip book, flipbook, booklet
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,9 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 = 1.1.0 = 
 * Fixed shortcode
 
+= 1.1.1 = 
+* Removed "Use of undefined constant manage_booklet_custom_columns" warning
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -131,6 +134,9 @@ Stable version
 
 = 1.1.0 = 
 * Fixed shortcode
+
+= 1.1.1 = 
+* Removed "Use of undefined constant manage_booklet_custom_columns" warning
 
 == Image credits ==
 
