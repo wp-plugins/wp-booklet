@@ -3,7 +3,7 @@
  * Plugin Name: WP Booklet
  * Plugin URI: http://binarystash.blogspot.com/2013/11/wp-booklet.html
  * Description: Allows creation of flip books using the jQuery Booklet plugin
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: BinaryStash
  * Author URI:  binarystash.blogspot.com
  * License: GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -62,8 +62,8 @@ class WP_Booklet {
 		add_filter( 'post_updated_messages', array( &$this, 'modify_messages' ) );
 		
 		//Add shortcode column to booklet admin
-		add_filter( 'manage_posts_columns', array( &$this, manage_booklet_columns ) );
-		add_filter( 'manage_posts_custom_column', array( &$this, manage_booklet_custom_columns ), 10, 2);
+		add_filter( 'manage_posts_columns', array( &$this, 'manage_booklet_columns' ) );
+		add_filter( 'manage_posts_custom_column', array( &$this, 'manage_booklet_custom_columns' ), 10, 2);
 		
 		//Process PDF
         add_action('wp_ajax_process_pdf', array(&$this,'process_pdf') );
