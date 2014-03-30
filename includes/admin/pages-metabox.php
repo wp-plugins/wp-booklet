@@ -11,7 +11,7 @@
 					</div>
 					<div class="wp-booklet-portlet-content">
 						<div class="wp-booklet-portlet-content-left">
-							<?php $image = wp_get_attachment_image_src( $page, $size, $icon ); ?> 
+							<?php $image = wp_get_attachment_image_src( $page, 'medium', false ); ?> 
 							<img src="<?php echo $image[0] ?>" class="wp-booklet-img"/>
 							<input class="wp-booklet-attachment-id" value="<?php echo $page ?>" name="wp-booklet-attachment[]" type="hidden"/>
 						</div>
