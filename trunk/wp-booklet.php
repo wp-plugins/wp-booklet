@@ -3,7 +3,7 @@
  * Plugin Name: WP Booklet
  * Plugin URI: http://binarystash.blogspot.com/2013/11/wp-booklet.html
  * Description: Allows creation of flip books using the jQuery Booklet plugin
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: BinaryStash
  * Author URI:  binarystash.blogspot.com
  * License: GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -143,12 +143,12 @@ class WP_Booklet {
 		$result = $this->_run_command("convert -limit memory 32MiB -limit map 64MiB {$pdf} {$target}");
 		
 		if ( !$result['error'] ) {
-			return false;
-		}
-		else {
 			$file_exists = file_exists( $target );
 			@unlink( $target );
 			return $file_exists;
+		}
+		else {
+			return false;
 		}
 	}
 	
@@ -172,7 +172,7 @@ class WP_Booklet {
 		}
 		
 		//Use Imagemagick and Ghostscript to convert PDF pages into jpegs
-		$operation = $this->_run_command("convert -verbose -limit memory 32MiB -limit map 64MiB {$pdf_path}[0-9] {$upload_path}/{$image_group}.jpg");
+		$operation = $this->_run_command("convert -density 200 -verbose -limit memory 32MiB -limit map 64MiB {$pdf_path}[0-9] {$upload_path}/{$image_group}.jpg");
 		if ( $operation['error'] ) {
 			echo json_encode( array(
 				'wpb_success'=>false,
@@ -283,6 +283,7 @@ class WP_Booklet {
 		extract( $atts );
 		
 		$meta = get_post_custom($id);
+		$instance_id = uniqid();
 		$pages = maybe_unserialize( $meta['wp_booklet_pages'][0] );
 		$properties = maybe_unserialize( $meta['wp_booklet_metas'][0] );
 		$pages_properties = maybe_unserialize( $meta['wp_booklet_pages_properties'][0] );
@@ -307,14 +308,15 @@ class WP_Booklet {
 	
 	private function _run_command($cmd) {
 		try {
-			$output = @shell_exec($cmd);
-			if ( empty( $output ) ) {
-				$result['error'] = true;
-				$result['message'] = "Command not found. It may be missing, misconfigured, or disabled.";
+			exec( $cmd, $output, $return_var );
+			
+			if ( $return_var === 0  ) {
+				$result['error'] = false;
+				$result['message'] = implode(" ",$output);
 			}
 			else {
-				$result['error'] = false;
-				$result['message'] = $output;
+				$result['error'] = true;
+				$result['message'] = "Command exited with error code: " . $return_var;
 			}
 		}
 		catch(Exception $e) {
@@ -349,13 +351,15 @@ class WP_Booklet {
 		wp_enqueue_script( 'jquery-ui-widget' );
 		wp_enqueue_script( 'jquery-ui-mouse' );
 		wp_enqueue_script( 'jquery-ui-draggable' );
+		wp_enqueue_script( 'jquery-effects-core' );
 		
-		wp_enqueue_script( 'jquery-easing', WP_BOOKLET_URL . 'js/jquery.easing.js' );
 		wp_enqueue_script( 'jquery-wpbooklet', WP_BOOKLET_URL . 'js/jquery.wpbooklet.js' );
-		wp_enqueue_style( 'jquery-wpbooklet-css', WP_BOOKLET_URL . 'css/booklet/jquery.wpbooklet.css' );
-		wp_enqueue_style( 'wpbooklet-css', WP_BOOKLET_URL . 'css/booklet/booklet.css' );
-		
+		wp_enqueue_script( 'jquery-wpcolorbox', WP_BOOKLET_URL . 'js/jquery.wpcolorbox.js' );
 		wp_enqueue_script( 'jquery-wpbookletcarousel', WP_BOOKLET_URL . 'js/jquery.wpbookletcarousel.js' );
+		
+		wp_enqueue_style( 'jquery-wpbooklet-css', WP_BOOKLET_URL . 'css/booklet/jquery.wpbooklet.css' );
+		wp_enqueue_style( 'jquery-wpcolorbox-css', WP_BOOKLET_URL . 'css/booklet/jquery.wpcolorbox.css' );
+		wp_enqueue_style( 'wpbooklet-css', WP_BOOKLET_URL . 'css/booklet/booklet.css' );
 		wp_enqueue_style( 'jquery-wpcarousel-css', WP_BOOKLET_URL . 'css/booklet/jquery.wpbookletcarousel.css' );
 	}
 	
@@ -392,6 +396,7 @@ class WP_Booklet {
 			$properties['wp-booklet-closed'] = sanitize_text_field( $_POST['wp-booklet-metas']['wp-booklet-closed'] );
 			$properties['wp-booklet-padding'] = sanitize_text_field( $_POST['wp-booklet-metas']['wp-booklet-padding'] );
 			$properties['wp-booklet-thumbnails'] = sanitize_text_field( $_POST['wp-booklet-metas']['wp-booklet-thumbnails'] );
+			$properties['wp-booklet-popup'] = sanitize_text_field( $_POST['wp-booklet-metas']['wp-booklet-popup'] );
 			
 			delete_post_meta( $post_id, 'wp_booklet_metas' );
 			update_post_meta( $post_id, 'wp_booklet_metas', $properties );
@@ -433,9 +438,17 @@ class WP_Booklet {
 		
 		//Get meta
 		$meta = get_post_custom($post->ID);
-		$pages = maybe_unserialize( $meta['wp_booklet_pages'][0] );
-		$pages_properties = maybe_unserialize( $meta['wp_booklet_pages_properties'][0] );
+		$pages = array();
+		$pages_properties = array();
 		
+		if ( isset(  $meta['wp_booklet_pages'] ) ) { 
+			$pages = maybe_unserialize( $meta['wp_booklet_pages'][0] );
+		}
+		
+		if ( isset(  $meta['wp_booklet_pages_properties'] ) ) {
+			$pages_properties = maybe_unserialize( $meta['wp_booklet_pages_properties'][0] );
+		}
+	
 		//Can produce PDF?
 		$pdf_capable = $this->_can_produce_pdf();
 		
@@ -445,7 +458,23 @@ class WP_Booklet {
 	function create_properties_metabox( $post ) {
 		
 		$meta = get_post_custom($post->ID);
-		$properties = maybe_unserialize( $meta['wp_booklet_metas'][0] );
+		$properties = array(
+			'wp-booklet-width'=>600,
+			'wp-booklet-height'=>400,
+			'wp-booklet-speed'=>1000,
+			'wp-booklet-delay'=>0,
+			'wp-booklet-direction'=>"LTR",
+			'wp-booklet-arrows'=>"false",
+			'wp-booklet-pagenumbers'=>"false",
+			'wp-booklet-closed'=>"false",
+			'wp-booklet-padding'=>10,
+			'wp-booklet-thumbnails'=>"false",
+			'wp-booklet-popup'=>"false"
+		);
+		
+		if ( isset( $meta['wp_booklet_metas'] ) ) {
+			$properties = maybe_unserialize( $meta['wp_booklet_metas'][0] );
+		}
 		
 		include WP_BOOKLET_DIR . "/includes/admin/properties-metabox.php";
 	}

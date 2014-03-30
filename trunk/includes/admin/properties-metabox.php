@@ -1,9 +1,9 @@
 <p>
-	<label>Page width</label><br/>
+	<label>Actual page width</label><br/>
 	<input size="18" type="text" name="wp-booklet-metas[wp-booklet-width]" value="<?php echo $properties['wp-booklet-width'] ? $properties['wp-booklet-width'] : 600  ?>"/> pixels
 </p>
 <p>
-	<label>Page height</label><br/>
+	<label>Actual page height</label><br/>
 	<input size="18" type="text" name="wp-booklet-metas[wp-booklet-height]" value="<?php echo $properties['wp-booklet-height'] ? $properties['wp-booklet-height'] : 400 ?>"/> pixels
 </p>
 <p>
@@ -45,6 +45,13 @@
 	<select class="widefat" name="wp-booklet-metas[wp-booklet-thumbnails]">
 		<option <?php if ( $properties["wp-booklet-thumbnails"] == "true" ) { echo "selected='selected'"; } ?> value="true">Yes</option>
 		<option <?php if ( $properties["wp-booklet-thumbnails"] == "false" || !$properties["wp-booklet-thumbnails"] ) { echo  "selected='selected'"; } ?> value="false">No</option>
+	</select>
+</p>
+<p>
+	<label>Enable popup on click?</label>
+	<select class="widefat" name="wp-booklet-metas[wp-booklet-popup]">
+		<option <?php if ( $properties["wp-booklet-popup"] == "true" ) { echo "selected='selected'"; } ?> value="true">Yes</option>
+		<option <?php if ( $properties["wp-booklet-popup"] == "false" || !$properties["wp-booklet-popup"] ) { echo  "selected='selected'"; } ?> value="false">No</option>
 	</select>
 </p>
 <p>
