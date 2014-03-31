@@ -1,0 +1,51 @@
+/*
+    wpcolorbox Core Style:
+    The following CSS is consistent between example themes and should not be altered.
+*/
+#wpcolorbox, #wpcboxOverlay, #wpcboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+#wpcboxWrapper {max-width:none;}
+#wpcboxOverlay{position:fixed; width:100%; height:100%;}
+#wpcboxMiddleLeft, #wpcboxBottomLeft{clear:left;}
+#wpcboxContent{position:relative;}
+#wpcboxLoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;}
+#wpcboxTitle{margin:0;}
+#wpcboxLoadingOverlay, #wpcboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
+#wpcboxPrevious, #wpcboxNext, #wpcboxClose, #wpcboxSlideshow{cursor:pointer;}
+.wpcboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.wpcboxIframe{width:100%; height:100%; display:block; border:0; padding:0; margin:0;}
+#wpcolorbox, #wpcboxContent, #wpcboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
+#wpcolorbox, #wpcboxWrapper, #wpcboxLoadedContent, #wpcboxContent, .wpcboxPhoto { max-width:100% }
+.wpcboxPhoto { height:auto !important }
+
+/* 
+    User Style:
+    Change the following styles to modify the appearance of wpcolorbox.  They are
+    ordered & tabbed in a way that represents the nesting of the generated HTML.
+*/
+#wpcboxOverlay{background:#fff;}
+#wpcolorbox{outline:0;}
+    #wpcboxContent{margin-top:32px; overflow:visible;}
+        .wpcboxIframe{background:#fff;}
+        #wpcboxError{padding:50px; border:1px solid #ccc;}
+        #wpcboxLoadedContent{padding:1px;}
+        #wpcboxLoadingOverlay{}
+        #wpcboxTitle{position:absolute; top:-22px; left:0; color:#000;}
+        #wpcboxCurrent{position:absolute; top:-22px; right:205px; text-indent:-9999px;}
+
+        /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+        #wpcboxPrevious, #wpcboxNext, #wpcboxSlideshow, #wpcboxClose {border:0; padding:0; margin:0; overflow:visible; text-indent:-9999px; width:20px; height:20px; position:absolute; top:-20px; background:url(../../images/booklet/controls.png) no-repeat 0 0;}
+        
+        /* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+        #wpcboxPrevious:active, #wpcboxNext:active, #wpcboxSlideshow:active, #wpcboxClose:active {outline:0;}
+
+        #wpcboxPrevious{background-position:0px 0px; right:44px;}
+        #wpcboxPrevious:hover{background-position:0px -25px;}
+        #wpcboxNext{background-position:-25px 0px; right:22px;}
+        #wpcboxNext:hover{background-position:-25px -25px;}
+        #wpcboxClose{background-position:-50px 0px; right:0;}
+        #wpcboxClose:hover{background-position:-50px -25px;}
+        .wpcboxSlideshow_on #wpcboxPrevious, .wpcboxSlideshow_off #wpcboxPrevious{right:66px;}
+        .wpcboxSlideshow_on #wpcboxSlideshow{background-position:-75px -25px; right:44px;}
+        .wpcboxSlideshow_on #wpcboxSlideshow:hover{background-position:-100px -25px;}
+        .wpcboxSlideshow_off #wpcboxSlideshow{background-position:-100px 0px; right:44px;}
+        .wpcboxSlideshow_off #wpcboxSlideshow:hover{background-position:-75px -25px;}
