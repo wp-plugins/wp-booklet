@@ -4,7 +4,7 @@ Donate link: http://binarystash.blogspot.com/
 Tags: flip book, flipbook, booklet
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,10 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 * UI enhancements 
 * Fixed warnings on admin pages
 
+= 1.1.3 = 
+* Corrected booklet dimensions
+* Synced popups with booklet
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -151,6 +155,10 @@ Stable version
 * Added popups
 * UI enhancements 
 * Fixed warnings on admin pages
+
+= 1.1.3 = 
+* Corrected booklet dimensions
+* Synced popups with booklet
 
 == Image credits ==
 

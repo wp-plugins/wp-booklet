@@ -45,11 +45,15 @@
 <script type="text/javascript">
 	jQuery(document).ready( function() {
 		
+		/*----- Set variables -----*/
+		
 		var booklet = jQuery(".wp-booklet-<?php echo $instance_id ?>");
 		var bookletContainer = jQuery(".wp-booklet-<?php echo $instance_id ?>-container");
 		var bookletThumbsContainer = jQuery(".wp-booklet-<?php echo $instance_id ?>-thumbs");
 		var bookletExpanded = jQuery(".wp-booklet-<?php echo $instance_id ?>-expanded");
 		
+		var pageWidth = <?php echo $properties['wp-booklet-width'] ?>;
+		var pageHeight = <?php echo $properties['wp-booklet-height'] ?>; 
 		var pagePadding = <?php echo $properties['wp-booklet-padding'] > -1 ? $properties['wp-booklet-padding'] : 10  ?>;
 		var bookletWidth = <?php echo $properties['wp-booklet-width'] ? ( $properties['wp-booklet-width'] * 2 ) : 560?> + (4 * pagePadding);
 		var bookletHeight = <?php echo $properties['wp-booklet-height'] ? $properties['wp-booklet-height'] : 380 ?> + (2 * pagePadding);
@@ -57,7 +61,9 @@
 		var thumbsSide = 11;
 		var bookletContainerWidth =  bookletWidth + bookletSide * 2;
 		var bookletThumbsContainerWidth = bookletWidth - 22 ;
-
+		
+		/*----- Set up booklet -----*/
+		
 		booklet.wpbooklet({
 			width:bookletWidth,
 			height:bookletHeight,
@@ -94,17 +100,17 @@
 				closed:<?php echo $properties['wp-booklet-closed'] ?>
 			<?php endif ?>
 		});
-				
+		
+		/*----- Set up carousel -----*/
+		
 		<?php if ( $properties['wp-booklet-thumbnails'] == 'true' ) : ?>
 			bookletThumbsContainer.find('.wp-booklet-carousel').wpbookletcarousel();
 			bookletThumbsContainer.find('.wp-booklet-carousel-prev').wpbookletcarouselControl({ target: '-=1' });
 			bookletThumbsContainer.find('.wp-booklet-carousel-next').wpbookletcarouselControl({ target: '+=1' }); 
 			jQuery('.wp-booklet-carousel-next, .wp-booklet-carousel-prev').on('wpbookletcarouselcontrol:active', function(e) {
-				console.log("active");
                 jQuery(e.currentTarget).removeClass('inactive');
             });
             jQuery('.wp-booklet-carousel-next, .wp-booklet-carousel-prev').on('wpbookletcarouselcontrol:inactive', function(e) {
-				console.log("inactive");
                 jQuery(e.currentTarget).addClass('inactive');
             });
 			bookletThumbsContainer.find('.wp-booklet-carousel a').on('click', function(e) {
@@ -124,6 +130,8 @@
 			
 		<?php endif ?>
 		
+		/*----- Make booklet responsive -----*/
+		
 		resizeBooklet();
 		jQuery(window).resize(resizeBooklet);
 		function resizeBooklet() {
@@ -132,10 +140,12 @@
 				var allowedWidth = jQuery(v).parent().parent().width();
 				
 				jQuery(v).wpbooklet("option","width",allowedWidth - bookletSide * 2);
-				jQuery(v).wpbooklet("option","height",(allowedWidth * bookletHeight) / bookletWidth);
+				jQuery(v).wpbooklet("option","height",((allowedWidth - bookletSide * 2) / 2) * pageHeight / pageWidth);
 				jQuery(v).parent().find(".wp-booklet-thumbs-default").width( allowedWidth - bookletSide * 2 );
 			});
 		}
+		
+		/*----- Set up popups -----*/
 		
 		booklet.find(".wp-booklet-popup-trigger a").wpcolorbox({
 			rel:"wp-booklet-popup-<?php echo $instance_id ?>",
@@ -145,7 +155,13 @@
 		});
 		
 		jQuery(document).bind('wpcbox_complete', function(data){
-			console.log(data);
+			var wpcboxIndex = booklet.find(".wpcboxElement").index( jQuery.wpcolorbox.element() );
+			<?php if ( $properties['wp-booklet-closed'] == "false" ) : ?>
+				if ( wpcboxIndex == 0 ) { wpcboxIndex = 'start' }
+			<?php else: ?>
+				if ( wpcboxIndex == 1 ) { wpcboxIndex = 'start' }
+			<?php endif ?>
+			booklet.wpbooklet('gotopage',wpcboxIndex);
 		});
 		
 	});
