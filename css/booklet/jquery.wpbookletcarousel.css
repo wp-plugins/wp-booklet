@@ -40,7 +40,6 @@
 .wp-booklet-thumbs-default .wp-booklet-carousel img {
     display: block;
 	width:auto;
-	height:100px !important;
 	max-width:none;
 }
 .wp-booklet-thumbs-default .wp-booklet-carousel-prev, .wp-booklet-thumbs-default .wp-booklet-carousel-next {
