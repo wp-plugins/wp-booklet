@@ -51,10 +51,12 @@
 			
 		</table>
 		
-		</form>
 		<p class="submit">
 			<input type="submit" class="button-primary" value="Save Changes" />
 		</p>
+		
+		</form>
+		
 
 	</form>
 
