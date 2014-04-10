@@ -3,7 +3,7 @@
  * Plugin Name: WP Booklet
  * Plugin URI: http://binarystash.blogspot.com/2013/11/wp-booklet.html
  * Description: Allows creation of flip books using the jQuery Booklet plugin
- * Version: 1.1.5
+ * Version: 1.1.6
  * Author: BinaryStash
  * Author URI:  binarystash.blogspot.com
  * License: GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -159,8 +159,9 @@ class WP_Booklet {
 		$upload_dir = wp_upload_dir();
 		$upload_path = $upload_dir['path'];
 		$image_group = uniqid();
-		$pdf_page_count =  $this->_get_pdf_page_count( $pdf_path );
-		$page_count = ( get_option('wp-booklet-pdf-limit-status') == 'on' && $pdf_page_count > 10 ) ? 10 : $this->_get_pdf_page_count( $pdf_path );
+		$actual_page_count =  $this->_get_pdf_page_count( $pdf_path );
+		$attachment_page_count = ( get_option('wp-booklet-pdf-limit-status') == 'on' && $actual_page_count > 10 ) ? 10 : $actual_page_count;
+		$conversion_page_count = ( get_option('wp-booklet-pdf-limit-status') == 'on' && $actual_page_count > 10 ) ? "[0-9]" : "";
 		
 		//Check that upload directory is writable by server
 		if ( $upload_dir['error'] || !is_writable($upload_path) ) {
@@ -172,7 +173,7 @@ class WP_Booklet {
 		}
 		
 		//Use Imagemagick and Ghostscript to convert PDF pages into jpegs
-		$operation = $this->_run_command("convert -density 200 -verbose -limit memory 32MiB -limit map 64MiB {$pdf_path}[0-9] {$upload_path}/{$image_group}.jpg");
+		$operation = $this->_run_command("convert -density 200 -verbose -limit memory 32MiB -limit map 64MiB {$pdf_path}{$conversion_page_count} {$upload_path}/{$image_group}.jpg");
 		if ( $operation['error'] ) {
 			echo json_encode( array(
 				'wpb_success'=>false,
@@ -185,7 +186,7 @@ class WP_Booklet {
 		$images = array();
 		
 		//Insert images as new attachments
-		for ( $ctr = 0; $ctr < $page_count; $ctr++ ) {
+		for ( $ctr = 0; $ctr < $attachment_page_count; $ctr++ ) {
 			
 			//Prepare attachment
 			$filename = $upload_path."/".$image_group."-".$ctr.".jpg";
