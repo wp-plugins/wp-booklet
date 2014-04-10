@@ -121,6 +121,9 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 = 1.1.5 =
 * Fixed settings page
 
+= 1.1.6 =
+* Fixed unlimited PDF pages upload
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -171,6 +174,9 @@ Stable version
 
 = 1.1.5 =
 * Fixed settings page
+
+= 1.1.6 =
+* Fixed unlimited PDF pages upload
 
 == Image credits ==
 
