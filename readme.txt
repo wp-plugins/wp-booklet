@@ -1,10 +1,10 @@
 === WP Booklet ===
 Contributors: binarystash01
-Donate link: http://www.binarystash.com
+Donate link: http://binarystash.blogspot.com/
 Tags: flip book, flipbook, booklet
-Requires at least: 3.9
-Tested up to: 4.2.2
-Stable tag: 2.0
+Requires at least: 3.5
+Tested up to: 3.8
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,18 +12,18 @@ Allows creation of flip books using the jQuery Booklet plugin
 
 == Description ==
 
-**NOTICE TO USERS OF WP BOOKLET 1.x**: *WP Booklet has been rewritten and requires old booklets to be imported. Use Booklets->Import to import them after installation.*
+Flip books are useful for creating photo albums, brochures, and other promotional materials. WP Booklet is a Wordpress plugin that allows you to create them using jQuery Booklet.
 
-WP Booklet 2 makes creating brochures and magazine-like pages easily. It comes with built-in themes for casual users and allows more advanced users to add their own.
+This Wordpress plugin provides a friendly user interface for configuring your flip books and displaying them anywhere on your Wordpress site using a shortcode. Unlike other plugins, WP Booklet works on desktop and mobile devices.
 
-This plugin is the successor to WP Booklet 1.x and shares most of its features.
+WP Booklet provides the following features.
 
 *   PDF uploads
 *   Bulk image uploads
 *   Page thumbnails
 *   Compatibility with mobile devices
 *	Full responsiveness
-*	Bulk importer for WP Booklet 1.x booklets
+*	Popup view
 
 == Installation ==
 
@@ -31,26 +31,18 @@ This section describes how to install the plugin and get it working.
 
 1. Upload the plugin folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Create your flip books under 'Booklets 2'.
-4. Copy the provided shortcode and paste it on pages or widgets.
+3. Create your flip books under 'Booklets'.
+4. Use the provided shortcode.
 
 == Frequently Asked Questions ==
 
-= My old booklets are gone after update. What must I do? =
-No need to panic, they can be restored via Booklets->Import.
-
 = How do I change the style of my flip book? =
 
-1. Under your theme folder, create a folder named `wpbooklet`.
-2. Copy one of the provided themes under `/wp-content/plugins/wp-booklet2/themes/booklet` to `wpbooklet`. For example, `/wp-content/themes/my-theme/wpbooklet/light`.
-3. Change the name of your custom theme. For example, `/wp-content/themes/my-theme/wpbooklet/light` to `/wp-content/themes/my-theme/wpbooklet/customtheme`.
-4. Update the classes in `/wp-content/themes/my-theme/wpbooklet/customtheme/style.css` and `/wp-content/themes/my-theme/wpbooklet/booklet.php`.
-5. Customize the look of your theme.
-6. Your new theme should appear under themes menu.
+You can override the style in your theme's style.css
 
 = Do you provide flip book templates? = 
 
-Yes. Two built-in themes are provided.
+No.
 
 = How do I upload PDFs? =
 
@@ -74,91 +66,44 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 
 == Screenshots ==
 
-1. Light theme
-2. Dark theme
-3. Settings page
-4. Import page
-5. Booklet editor 
+1. Administration screen
+2. Sample flip book
 
 == Changelog ==
 
-= 2.0 =
-* Added ability to customize and add new themes
-* Shrunk buttons
-* Removed popups
+= 1.0 =
+* Stable version
 
-= 1.1.6 =
-* Fixed unlimited PDF pages upload
-
-= 1.1.5 =
-* Fixed settings page
-
-= 1.1.4 =
-* Corrected thumbnail sizes
-
-= 1.1.3 = 
-* Corrected booklet dimensions
-* Synced popups with booklet
-
-= 1.1.2 = 
-* Fixed PDF capability detection
-* Added popups
-* UI enhancements 
-* Fixed warnings on admin pages
-
-= 1.1.1 = 
-* Removed "Use of undefined constant manage_booklet_custom_columns" warning
-
-= 1.1.0 = 
-* Fixed shortcode
-
-= 1.0.9 = 
-* PDF testing now involves creating a PDF file and checking for its existence.
-
-= 1.0.8 = 
-* Fixed empty pages when PDF has less than 10 pages and PDF limit is on
-
-= 1.0.7 = 
-* UI enhancements
-* Fixed padding reverting to 10px when set to 0
-* Added test for uploads folder's writability
-
-= 1.0.6 = 
-* UI enhancements
-* Added ability to show thumbnailed previews
-* Added ability to upload PDFs
-* Added ability to close booklets
-* Added ability to upload images in bulk
+= 1.0.4 =
+* Fixed a bug on themes with multiple jQuery versions
 
 = 1.0.5 = 
 * UI enhancements
 * Added ability to add page links
 
-= 1.0.4 =
-* Fixed a bug on themes with multiple jQuery versions
+= 1.0.6 = 
+* UI enhancements
+* Added ability to show thumbnailed previews
+* Added ability to upload PDFs
+* Added ability to close booklets
+* Added ability to upload images in bulk
 
-= 1.0 =
-* Stable version
+= 1.0.7 = 
+* UI enhancements
+* Fixed padding reverting to 10px when set to 0
+* Added test for uploads folder's writability
 
-== Upgrade Notice ==
+= 1.0.8 = 
+* Fixed empty pages when PDF has less than 10 pages and PDF limit is on
 
-= 2.0 =
-* Added ability to customize and add new themes
-* Shrunk buttons
-* Removed popups
+= 1.0.9 = 
+* PDF testing now involves creating a PDF file and checking for its existence.
 
-= 1.1.6 =
-* Fixed unlimited PDF pages upload
+= 1.1.0 = 
+* Fixed shortcode
 
-= 1.1.5 =
-* Fixed settings page
-
-= 1.1.4 =
-* Corrected thumbnail sizes
-
-= 1.1.3 = 
-* Corrected booklet dimensions
-* Synced popups with booklet
+= 1.1.1 = 
+* Removed "Use of undefined constant manage_booklet_custom_columns" warning
 
 = 1.1.2 = 
 * Fixed PDF capability detection
@@ -166,22 +111,29 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 * UI enhancements 
 * Fixed warnings on admin pages
 
-= 1.1.1 = 
-* Removed "Use of undefined constant manage_booklet_custom_columns" warning
+= 1.1.3 = 
+* Corrected booklet dimensions
+* Synced popups with booklet
 
-= 1.1.0 = 
-* Fixed shortcode
+= 1.1.4 =
+* Corrected thumbnail sizes
 
-= 1.0.9 = 
-* PDF testing now involves creating a PDF file and checking for its existence.
+= 1.1.5 =
+* Fixed settings page
 
-= 1.0.8 = 
-* Fixed empty pages when PDF has less than 10 pages and PDF limit is on
+= 1.1.6 =
+* Fixed unlimited PDF pages upload
 
-= 1.0.7 = 
-* UI enhancements
-* Fixed padding reverting to 10px when set to 0
-* Added test for uploads folder's writability
+== Upgrade Notice ==
+
+= 1.0 =
+Stable version
+
+= 1.0.4 =
+* Fixed a bug on themes with multiple jQuery versions
+
+= 1.0.5 = 
+* The ability to add page links was added.
 
 = 1.0.6 = 
 * UI enhancements
@@ -190,11 +142,45 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 * Added ability to close booklets
 * Added ability to upload images in bulk
 
-= 1.0.5 = 
-* The ability to add page links was added.
+= 1.0.7 = 
+* UI enhancements
+* Fixed padding reverting to 10px when set to 0
+* Added test for uploads folder's writability
 
-= 1.0.4 =
-* Fixed a bug on themes with multiple jQuery versions
+= 1.0.8 = 
+* Fixed empty pages when PDF has less than 10 pages and PDF limit is on
 
-= 1.0 =
-Stable version
+= 1.0.9 = 
+* PDF testing now involves creating a PDF file and checking for its existence.
+
+= 1.1.0 = 
+* Fixed shortcode
+
+= 1.1.1 = 
+* Removed "Use of undefined constant manage_booklet_custom_columns" warning
+
+= 1.1.2 = 
+* Fixed PDF capability detection
+* Added popups
+* UI enhancements 
+* Fixed warnings on admin pages
+
+= 1.1.3 = 
+* Corrected booklet dimensions
+* Synced popups with booklet
+
+= 1.1.4 =
+* Corrected thumbnail sizes
+
+= 1.1.5 =
+* Fixed settings page
+
+= 1.1.6 =
+* Fixed unlimited PDF pages upload
+
+== Image credits ==
+
+* image 1 - http://www.publicdomainpictures.net/view-image.php?image=63350&picture=agapanthus-buds
+* image 2 - http://www.publicdomainpictures.net/view-image.php?image=63355&picture=alyssum
+* image 3 - http://www.publicdomainpictures.net/view-image.php?image=63356&picture=stylized-background-fabric-31
+* image 4 - http://www.publicdomainpictures.net/view-image.php?image=63352&picture=surface-of-rock

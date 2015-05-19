@@ -45,7 +45,7 @@
 	display:inline-block;
 	width:15px;
 	height:15px;
-	background:url("../images/icon-close.png") 0 no-repeat;
+	background:url("../../images/admin/icon-close.png") 0 no-repeat;
 	cursor:pointer;
 }
 
@@ -55,7 +55,7 @@
 	height:8px;
 	margin-right:10px;
 	cursor:pointer;
-	background:url("../images/icon-arrows.png") 0 -8px no-repeat;
+	background:url("../../images/admin/icon-arrows.png") 0 -8px no-repeat;
 }
 
 .wp-booklet-portlet-hidden .wp-booklet-header-visibility {
@@ -97,7 +97,7 @@
 	top:0;
 	left:0;
 	z-index:10;
-	background:#fff url("../images/preloader.gif") center center no-repeat;
+	background:#fff url("../../images/admin/preloader.gif") center center no-repeat;
 	display:none;
 	opacity:0;
 	filter:alpha(opacity=0);
@@ -109,23 +109,4 @@
 	top:55%;
 	width:100%;
 	height:45%;
-}
-
-/* Importer */
-
-.post-type-wp-booklet2 .reimport-count {
-	display:none;
-}
-
-.post-type-wp-booklet2 .importer-page-message {
-	display:none;
-}
-
-/* Importer nag */
-
-.post-type-wp-booklet2  .error.import-nag {
-	padding-top:20px;
-	padding-bottom:20px;
-	border-color:orange;
-	border:2px solid orange;
 }

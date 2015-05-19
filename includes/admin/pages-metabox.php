@@ -11,13 +11,14 @@
 					</div>
 					<div class="wp-booklet-portlet-content">
 						<div class="wp-booklet-portlet-content-left">
-							<img src="<?php echo $page->get_image_url("medium") ?>" class="wp-booklet-img"/>
-							<input class="wp-booklet-attachment-id" value="<?php echo $page->get_id() ?>" name="wp-booklet-attachment[]" type="hidden"/>
+							<?php $image = wp_get_attachment_image_src( $page, 'medium', false ); ?> 
+							<img src="<?php echo $image[0] ?>" class="wp-booklet-img"/>
+							<input class="wp-booklet-attachment-id" value="<?php echo $page ?>" name="wp-booklet-attachment[]" type="hidden"/>
 						</div>
 						<div class="wp-booklet-portlet-content-right">
 							<p>
 								<label>Page Link</label><br/>
-								<input class="widefat" type="text" value="<?php echo $page->get_page_link() ?>" name="wp-booklet-attachment-properties[wp-booklet-page-link][]"/>
+								<input class="widefat" type="text" value="<?php echo $pages_properties[$key]['wp-booklet-page-link'] ?>" name="wp-booklet-attachment-properties[wp-booklet-page-link][]"/>
 							</p>
 						</div>
 						<div class="clearfix"></div>
@@ -123,7 +124,7 @@
 		jQuery(".wp-booklet-sortable-upload-pdf").on("click",function(e) {
 			e.preventDefault();
 			
-			<?php if( get_option('wp-booklet2-pdf-limit-status') == 'on' ) : ?>
+			<?php if( get_option('wp-booklet-pdf-limit-status') == 'on' ) : ?>
 			if ( !confirm("This feature only adds the first 10 pages of the PDF file. Continue?") ) { return; }
 			<?php endif ?>
 			
