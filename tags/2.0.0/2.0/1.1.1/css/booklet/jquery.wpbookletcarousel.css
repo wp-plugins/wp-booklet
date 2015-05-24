@@ -1,0 +1,63 @@
+
+.wp-booklet-thumbs-default {
+    border: 1px solid #c8c8c8;
+	padding:10px;
+    margin: 20px auto;
+    position: relative;
+}
+.wp-booklet-thumbs-default .wp-booklet-carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+.wp-booklet-thumbs-default .wp-booklet-carousel a {
+	cursor:pointer;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
+.wp-booklet-thumbs-default .wp-booklet-carousel a.selected {
+	opacity:1;
+	filter:alpha(opacity=100);
+}
+.wp-booklet-thumbs-default .wp-booklet-carousel ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 20000em;
+}
+.wp-booklet-thumbs-default .wp-booklet-carousel li {
+    -moz-box-sizing: border-box;
+    border: 1px solid #FFFFFF;
+    float: left;
+    width: 80px;
+	height:100px;
+	position:relative;
+	overflow:hidden;
+}
+.wp-booklet-thumbs-default .wp-booklet-carousel img {
+    display: block;
+	width:auto;
+	height:100px !important;
+	max-width:none;
+}
+.wp-booklet-thumbs-default .wp-booklet-carousel-prev, .wp-booklet-thumbs-default .wp-booklet-carousel-next {
+    background: none repeat scroll 0 0 #c8c8c8;
+    box-shadow: 0 0 4px #F0EFE7;
+    color: #FFFFFF;
+    font: 24px/27px Arial,sans-serif;
+    height: 30px;
+    margin-top: -15px;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 0 1px #000000;
+    top: 50%;
+    width: 30px;
+}
+.wp-booklet-thumbs-default .wp-booklet-carousel-prev {
+    left: -50px;
+}
+.wp-booklet-thumbs-default .wp-booklet-carousel-next {
+    right: -50px;
+}
