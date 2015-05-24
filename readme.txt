@@ -85,6 +85,9 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 
 == Changelog ==
 
+= 2.0.1 =
+* Fixed booklet editor
+
 = 2.0 =
 * Added ability to customize and add new themes
 * Shrunk buttons
@@ -144,6 +147,9 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 * Stable version
 
 == Upgrade Notice ==
+
+= 2.0.1 =
+* Fixed booklet editor
 
 = 2.0 =
 * Added ability to customize and add new themes
