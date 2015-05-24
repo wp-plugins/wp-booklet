@@ -1,9 +1,0 @@
-/* For Wordpress 3.8+ */
-.wp-booklet-sortable .wp-booklet-portlet-header,
-.wp-booklet-sortable .wp-booklet-portlet-content {
-	background:transparent !important;
-}
-
-.wp-booklet-sortable .wp-booklet-portlet {
-	background:#fff !important;
-}

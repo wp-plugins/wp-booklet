@@ -1,9 +1,0 @@
-.wp-booklet-container-default .page img {
-	max-width:100%;
-}
-
-.wp-booklet-container-default,
-.wp-booklet-container-default * {
-	box-sizing:content-box;
-	-moz-box-sizing:content-box;
-}
