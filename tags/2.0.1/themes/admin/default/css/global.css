@@ -1,0 +1,8 @@
+/* Importer nag */
+
+.error.wp-booklet2-import-nag {
+	padding-top:20px;
+	padding-bottom:20px;
+	border-color:orange;
+	border:2px solid orange;
+}
