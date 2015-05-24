@@ -45,22 +45,7 @@ class WP_Booklet2_Controller {
 		add_action('wp_ajax_import_booklets', array(&$this,'import_booklets') );
 		add_action( 'admin_notices', array(&$this,'import_notice') );
 	}
-	
-	function is_wp_booklet2_admin_page() {
-		if ( get_post_type() != 'wp_booklet2' ) {
-			if ( isset( $_GET['post_type'] ) ) {
-				if ( $_GET['post_type'] != 'wp-booklet2' ) {
-					return false;
-				}
-			}
-			else {
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
+
 	function import_notice() {
 		
 		if ( isset ( $_GET['page'] ) ) {
@@ -348,7 +333,7 @@ class WP_Booklet2_Controller {
 		
 		wp_enqueue_style( 'wpbooklet-global-css', WP_BOOKLET2_URL . '/themes/admin/default/css/global.css' );
 		
-		if ( !$this->is_wp_booklet2_admin_page() ) { return; }
+		if ( get_post_type() != 'wp-booklet2' ) { return; }
 		
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
