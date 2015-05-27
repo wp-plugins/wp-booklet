@@ -474,11 +474,11 @@ class WP_Booklet2_Booklet {
 	}
 	
 	/**
-	 * Echoes booklet.php
+	 * Builds booklet's HTML
 	 *
-	 * @return void
+	 * @return string
 	 */
-	function output() {
+	function get_output() {
 		
 		$booklet = $this;
 		
@@ -487,8 +487,8 @@ class WP_Booklet2_Booklet {
 		$pages = array();
 		
 		if ( empty( $page_ids ) ) {
-			echo "Booklet is empty or it doesn't exist.";
-			return;
+			$html = "Booklet is empty or it doesn't exist.";
+			return $html;
 		}
 		
 		foreach( $page_ids as $page_id ) {
@@ -510,7 +510,7 @@ class WP_Booklet2_Booklet {
 		$html = ob_get_contents();
 		ob_end_clean();
 		
-		echo $html;
+		return $html;
 		
 	}
 	
