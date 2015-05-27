@@ -378,11 +378,12 @@ class WP_Booklet2_Controller {
 		
 		if ( get_post_type() != 'wp-booklet2' ) {
 			return $messages;
+			exit;
 		}
 		
 		$booklet = new WP_Booklet2_Booklet( $post->ID );
 		
-		$messages['wp-booklet'] = array(
+		$messages['wp-booklet2'] = array(
 			"Shortcode is [wp-booklet id={$booklet->get_shortcode_id()}]",
 			"Booklet updated. Shortcode is [wp-booklet id={$booklet->get_shortcode_id()}]",
 			"Custom field updated.",
@@ -490,9 +491,8 @@ class WP_Booklet2_Controller {
 		extract( $atts );
 		
 		$booklet = new WP_Booklet2_Booklet($id);
-		$booklet->output();
 		
-		$t = new WP_Booklet2_Theme_Manager();
+		return $booklet->get_output();
 		
 	}
 
