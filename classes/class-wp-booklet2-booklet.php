@@ -69,12 +69,12 @@ class WP_Booklet2_Booklet {
 			$this->_speed = $booklet_properties['speed'];
 			$this->_delay = $booklet_properties['delay'];
 			$this->_direction = $booklet_properties['direction'];
-			$this->_arrows_enabled = $booklet_properties['arrows_enabled'];
-			$this->_page_numbers_enabled = $booklet_properties['page_numbers_enabled'];
+			$this->_arrows_enabled = (boolean) $booklet_properties['arrows_enabled'];
+			$this->_page_numbers_enabled = (boolean) $booklet_properties['page_numbers_enabled'];
 			$this->_cover_behavior = $booklet_properties['cover_behavior'];
 			$this->_padding = $booklet_properties['padding'];
-			$this->_thumbnails_enabled = $booklet_properties['thumbnails_enabled'];
-			$this->_popup_enabled = $booklet_properties['popup_enabled'];
+			$this->_thumbnails_enabled = (boolean) $booklet_properties['thumbnails_enabled'];
+			$this->_popup_enabled = (boolean) $booklet_properties['popup_enabled'];
 			$this->_theme = $booklet_properties['theme'];
         
 		}

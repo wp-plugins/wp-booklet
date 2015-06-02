@@ -5,9 +5,6 @@
 	<div class="importer-page-message updated success">
 		<p><strong>Import successful.</strong></p>
 	</div>
-	<div class="importer-page-message updated error">
-		<p><strong>Import unsuccessful. Please try again.</strong></p>
-	</div>
 	
 	<p>Import your WP Booklet 1.x booklets to WP Booklet 2. Click the button below to get started. Please keep this page open until the process completes.</p>
 

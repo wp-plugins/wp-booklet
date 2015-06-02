@@ -48,6 +48,13 @@
 	</select>
 </p>
 <p>
+	<label>Enable popups?</label>
+	<select class="widefat" name="wp-booklet-metas[wp-booklet-popups]">
+		<option <?php if ( $booklet->are_popups_enabled() ) : ?> selected="selected" <?php endif ?> value="true">Yes</option>
+		<option <?php if ( !$booklet->are_popups_enabled() ) : ?> selected="selected" <?php endif ?> value="false">No</option>
+	</select>
+</p>
+<p>
 	<label>Booklet cover behavior</label>
 	<select class="widefat" name="wp-booklet-metas[wp-booklet-closed]">
 		<option <?php if( $booklet->get_cover_behavior() == 'open' ): ?> selected="selected" <?php endif ?> value="open">Opened always</option>

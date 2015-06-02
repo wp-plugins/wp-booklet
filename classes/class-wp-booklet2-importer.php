@@ -121,6 +121,13 @@ class WP_Booklet2_Importer {
 				
 			}
 			
+			if ( $old_properties['wp-booklet-popup'] == "true" ) {
+				$new_booklet->enable_popups();
+			}
+			else {
+				$new_booklet->disable_popups();
+			}
+			
 			if ( $old_properties['wp-booklet-arrows'] == "true" ) {
 				$new_booklet->enable_arrows();
 			}

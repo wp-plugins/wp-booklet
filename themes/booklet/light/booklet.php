@@ -2,14 +2,28 @@
 	<div class="wp-booklet-light wp-booklet-<?php echo $instance_id ?>">
 		<?php foreach ( $pages as $key=>$page ) : ?>
 			<div class="page" data-page="<?php echo $key ?>">
+				
 				<?php $page_link = $page->get_page_link(); ?>
-				<?php if ( !empty($page_link) ) : ?>
-					<a href="<?php echo $page->get_page_link() ?>" >
+					
+				<?php if ( $booklet->are_popups_enabled() ) : ?>
+				
+					<a class="wp-booklet-popup-trigger" <?php if ( !empty( $page_link ) ): ?>data-link="<?php echo $page_link ?>"<?php endif ?> href="<?php echo $page->get_image_url("large") ?>" >
 						<img src="<?php echo $page->get_image_url("large") ?>" alt=""/>
 					</a>
-				<?php else : ?>	
-					<img src="<?php echo $page->get_image_url("large") ?>" alt=""/>
-				<?php endif ?>	
+				
+				<?php else: ?>
+					
+					<?php if ( !empty($page_link) ) : ?>
+						<a href="<?php echo $page_link ?>" >
+							<img src="<?php echo $page->get_image_url("large") ?>" alt=""/>
+						</a>
+					<?php else : ?>	
+						<img src="<?php echo $page->get_image_url("large") ?>" alt=""/>
+					<?php endif ?>	
+				
+				<?php endif ?>
+				
+			
 			</div>
 		<?php endforeach ?>
 	</div>
@@ -50,65 +64,83 @@
 		var bookletWidth = <?php echo $booklet->get_width() ?> + (4 * pagePadding);
 		var bookletHeight = <?php echo $booklet->get_height() ?> + (2 * pagePadding);
 		var speed = <?php echo $booklet->get_speed() ?>; 
+		var delay = <?php echo $booklet->get_delay() ?>;
 		var bookletSide = 45;
 		var thumbsSide = 11;
 		var bookletContainerWidth =  bookletWidth + bookletSide * 2;
 		var bookletThumbsContainerWidth = bookletWidth - 22 ;
 		
+		var popupsEnabled = <?php echo $booklet->are_popups_enabled() ? "true" : "false" ?>;
+		var thumbnailsEnabled = <?php echo $booklet->are_thumbnails_enabled() ? "true" : "false" ?>;
+		var arrowsEnabled = <?php echo $booklet->are_arrows_enabled() ? "true" : "false" ?>;
+		var pageNumbersEnabled = <?php echo $booklet->are_page_numbers_enabled() ? "true" : "false"  ?>;
+		
+		var coverBehavior = "<?php echo $booklet->get_cover_behavior() ?>";
+		
+		
 		/*----- Set up booklet -----*/
 		
-		booklet.wpbooklet({
+		var bookletSettings = {
 			width:bookletWidth,
 			height:bookletHeight,
 			speed:speed,
-			<?php if ( $booklet->get_delay() > 0 ) : ?>
-			auto:true,
-			delay:<?php echo $booklet->get_delay() ?>,
-			<?php endif ?>
 			create: function(event, data) {
-				<?php if ( $booklet->are_thumbnails_enabled() ) : ?>
+				
+				if ( thumbnailsEnabled ) {
 					bookletThumbsContainer.find(' .wp-booklet-carousel li:eq(0) a').addClass('selected');
-				<?php endif  ?>
+				}
+				
 			},
 			direction:bookletDirection,
-			arrows:<?php echo $booklet->are_arrows_enabled() ? "true" : "false" ?>,
-			pageNumbers:<?php echo $booklet->are_page_numbers_enabled() ? "true" : "false"  ?>,
+			arrows: arrowsEnabled,
+			pageNumbers: pageNumbersEnabled,
 			start: function(event, data) { 
-				<?php if ( $booklet->are_thumbnails_enabled() ) : ?>
-					
+				
+				if ( thumbnailsEnabled ) {
+
 					var index = data.index;
 					
-					<?php if ( $booklet->get_cover_behavior() != "open" ) : ?>
+					if ( coverBehavior != 'open' ) {
 						index--;
-					<?php endif ?>
+					}
 					
 					if ( index < 0 ) {
 						index = 0;
 					}
 					
 					var carouselPage = booklet.find(".page").eq(index).attr("data-page");
-					console.log(carouselPage);
 					
 					bookletThumbsContainer.find(' .wp-booklet-carousel li a').removeClass('selected');
 					bookletThumbsContainer.find(' .wp-booklet-carousel li:eq('+carouselPage+') a').addClass('selected');
 					bookletThumbsContainer.find(" .wp-booklet-carousel").wpbookletcarousel('scroll', carouselPage);
-				<?php endif ?>
+					
+				}
+				
 			},
-			pagePadding:pagePadding,
-			<?php if ( $booklet->get_cover_behavior() == 'center-closed' ) : ?>
-				autoCenter:true,
-			<?php endif ?>
-			
-			<?php if ( $booklet->get_cover_behavior() != 'open' ) : ?>
-				closed:true
-			<?php else: ?>
-				closed:<?php echo ( $booklet->get_cover_behavior() == 'center-closed' || $booklet->get_cover_behavior() == 'closed' ) ? "true" : "false" ?>
-			<?php endif ?>
-		});
+			pagePadding:pagePadding
+		};
+		
+		if ( delay > 0 ) {
+			bookletSettings.auto = true;
+			bookletSettings.delay =  delay;
+		}
+		
+		if ( coverBehavior == 'center-closed' ) {
+			bookletSettings.autoCenter = true;
+		}
+		
+		if ( coverBehavior != 'open' ) {
+			bookletSettings.closed = true;
+		}
+		else {
+			bookletSettings.closed = ( ( coverBehavior == 'center-closed' || coverBehavior == 'closed' ) ? true : false );
+		}
+		
+		booklet.wpbooklet(bookletSettings);
 		
 		/*----- Set up carousel -----*/
 		
-		<?php if ( $booklet->are_thumbnails_enabled() ) : ?>
+		if ( thumbnailsEnabled ) {
 			bookletThumbsContainer.find('.wp-booklet-carousel').wpbookletcarousel();
 			bookletThumbsContainer.find('.wp-booklet-carousel-prev').wpbookletcarouselControl({ target: '-=1' });
 			bookletThumbsContainer.find('.wp-booklet-carousel-next').wpbookletcarouselControl({ target: '+=1' }); 
@@ -122,18 +154,19 @@
 				bookletThumbsContainer.find(' .wp-booklet-carousel li a').removeClass('selected');
 				jQuery(e.currentTarget).addClass('selected');
 				
-				<?php if ( $booklet->get_cover_behavior() == 'open' ) : ?>
+				if ( coverBehavior == 'open' ) {
 					var index = jQuery(e.currentTarget).parent().parent().find("li").index( jQuery(e.currentTarget).parent() );
 					if ( index == 0 ) { index = 'start' }
-				<?php else: ?>
+				}
+				else {
 					var index = jQuery(e.currentTarget).parent().parent().find("li").index( jQuery(e.currentTarget).parent() ) + 1;
 					if ( index == 1 ) { index = 'start' }
-				<?php endif ?>
+				}
 				booklet.wpbooklet('gotopage',index);
 			});
 
 			
-		<?php endif ?>
+		}
 		
 		/*----- Make booklet responsive -----*/
 		
@@ -148,6 +181,38 @@
 				jQuery(v).wpbooklet("option","height",((allowedWidth - bookletSide * 2) / 2) * pageHeight / pageWidth);
 				jQuery(v).parent().find(".wp-booklet-thumbs-light").width( allowedWidth - bookletSide * 2 );
 			});
+		}
+		
+		/*----- Initialize popups -----*/
+		
+		if ( popupsEnabled ) {
+			
+			booklet.find(".wp-booklet-popup-trigger").wpbookletImagePopup({
+				overlayClass:'wpbooklet-image-popup-overlay-light',
+				beforeOpen: function(popup, link) {
+					
+					booklet.wpbooklet( "option", "auto", false );
+					
+					if ( typeof link.attr("data-link") !== "undefined" ) {
+					
+						popup.find("img").wrap("<a>");
+						popup.find("a").attr("href", link.attr("data-link"));
+					
+					}					
+						
+				},
+				afterClose: function(popup, link) {
+					
+					if ( delay ) {
+						booklet.wpbooklet( "option", "auto", true );
+					}
+					else {
+						booklet.wpbooklet( "option", "auto", false );
+					}
+					
+				}
+			});
+			
 		}
 		
 	});

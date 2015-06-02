@@ -301,6 +301,13 @@ class WP_Booklet2_Controller {
 			$booklet->set_padding( $_POST['wp-booklet-metas']['wp-booklet-padding'] );
 			$booklet->set_theme( $_POST['wp-booklet-metas']['wp-booklet-theme'] );
 			
+			if ( $_POST['wp-booklet-metas']['wp-booklet-popups'] == "true" ) {
+				$booklet->enable_popups();
+			}
+			else {
+				$booklet->disable_popups();
+			}
+			
 			if ( $_POST['wp-booklet-metas']['wp-booklet-arrows'] == "true" ) {
 				$booklet->enable_arrows();
 			}
@@ -332,6 +339,11 @@ class WP_Booklet2_Controller {
 	function include_admin_scripts($hook_suffix) {
 		
 		wp_enqueue_style( 'wpbooklet-global-css', WP_BOOKLET2_URL . '/themes/admin/default/css/global.css' );
+		wp_enqueue_style( 'wpbooklet-admin-css', WP_BOOKLET2_URL . '/themes/admin/default/css/admin.css' );
+		
+		if ( get_bloginfo("version") >= 3.8 ) {
+			wp_enqueue_style( 'wpbooklet-admin-css-gt-3.8', WP_BOOKLET2_URL . '/themes/admin/default/css/admin-gt-3.8.css' );
+		}
 		
 		if ( get_post_type() != 'wp-booklet2' ) { return; }
 		
@@ -341,11 +353,6 @@ class WP_Booklet2_Controller {
 		wp_enqueue_media();
 		wp_dequeue_script( 'autosave' );
 		
-		wp_enqueue_style( 'wpbooklet-admin-css', WP_BOOKLET2_URL . '/themes/admin/default/css/admin.css' );
-		
-		if ( get_bloginfo("version") >= 3.8 ) {
-			wp_enqueue_style( 'wpbooklet-admin-css-gt-3.8', WP_BOOKLET2_URL . '/themes/admin/default/css/admin-gt-3.8.css' );
-		}
 	}
 	
 	function include_frontend_scripts() {
@@ -358,9 +365,11 @@ class WP_Booklet2_Controller {
 		
 		wp_register_script( 'jquery-wpbooklet', WP_BOOKLET2_URL . 'assets/js/jquery.wpbooklet.js' );
 		wp_register_script( 'jquery-wpbookletcarousel', WP_BOOKLET2_URL . 'assets/js/jquery.wpbookletcarousel.js' );
+		wp_register_script( 'jquery-wpbookletimagepopup', WP_BOOKLET2_URL . 'assets/js/jquery.wpbooklet-image-popup.min.js' );
 		
 		wp_enqueue_script( 'jquery-wpbooklet' );
 		wp_enqueue_script( 'jquery-wpbookletcarousel' );
+		wp_enqueue_script( 'jquery-wpbookletimagepopup' );
 		
 		$theme_manager = new WP_Booklet2_Theme_Manager();
 		$themes = $theme_manager->get_all_themes();
