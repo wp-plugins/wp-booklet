@@ -81,8 +81,8 @@
 	min-height:33px;
 }
 
-#minor-publishing-actions,
-#misc-publishing-actions {
+.post-type-wp-booklet2 #minor-publishing-actions,
+.post-type-wp-booklet2 #misc-publishing-actions {
 	display:none;
 }
 
