@@ -14,7 +14,7 @@ Allows creation of flip books using the jQuery Booklet plugin
 
 **NOTICE TO USERS OF WP BOOKLET 1.x**: *WP Booklet has been rewritten and requires old booklets to be imported. Use Booklets->Import to import them after installation.*
 
-WP Booklet 2 makes creating brochures and magazine-like pages easily. It comes with built-in themes for casual users and allows more advanced users to add their own.
+WP Booklet 2 makes creating brochures and magazine-like pages easy. It comes with built-in themes for casual users and allows more advanced users to add their own.
 
 This plugin is the successor to WP Booklet 1.x and shares most of its features.
 
