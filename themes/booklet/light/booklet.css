@@ -455,6 +455,10 @@ body {
  * Booklet popup
  -----------------------------------------------------------------------------------------*/
 
+html.wpbooklet-image-popup-active {
+	overflow:hidden;
+}
+ 
 .wpbooklet-image-popup-overlay-light {
     top:0;
     left:0;

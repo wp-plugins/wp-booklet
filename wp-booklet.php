@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Booklet
  * Description: Allows creation of flip books using the jQuery Booklet plugin. Successor to WP Booklet 1.x
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: BinaryStash
  * Author URI:  http://www.binarystash.net
  * License: GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -17,6 +17,19 @@ if(!defined('WP_BOOKLET2_URL')){
 
 if(!defined('WP_BOOKLET2_DIR')){
 	define('WP_BOOKLET2_DIR', realpath(plugin_dir_path(__FILE__)) . DIRECTORY_SEPARATOR );
+}
+
+if(!defined('WP_BOOKLET2_THEME_LOCATIONS')){
+	define('WP_BOOKLET2_THEME_LOCATIONS', serialize( array(
+		array(
+			'theme_directory' => WP_BOOKLET2_DIR . "themes/booklet",
+			'theme_url' => WP_BOOKLET2_URL . "themes/booklet"
+		),
+		array(
+			'theme_directory' => get_stylesheet_directory() . DIRECTORY_SEPARATOR . "wpbooklet",
+			'theme_url' => get_stylesheet_directory_uri() . "/wpbooklet"
+		)
+	) ) );
 }
 
 /**
@@ -80,14 +93,26 @@ add_action( 'init', 'wp_booklet_register_booklet_page_post_type' );
 /*
  * Include classes
  */
-include WP_BOOKLET2_DIR . 'classes/class-wp-booklet2-booklet.php';
-include WP_BOOKLET2_DIR . 'classes/class-wp-booklet2-page.php';
-include WP_BOOKLET2_DIR . 'classes/class-wp-booklet2-command.php';
-include WP_BOOKLET2_DIR . 'classes/class-wp-booklet2-controller.php';
-include WP_BOOKLET2_DIR . 'classes/class-wp-booklet2-pdf.php';
-include WP_BOOKLET2_DIR . 'classes/class-wp-booklet2-theme.php';
-include WP_BOOKLET2_DIR . 'classes/class-wp-booklet2-theme-manager.php';
-include WP_BOOKLET2_DIR . 'classes/class-wp-booklet2-importer.php';
+ 
+$wp_booklet_included_classes = array(
+	'class-wp-booklet2-booklet.php',
+	'class-wp-booklet2-page.php',
+	'class-wp-booklet2-command.php',
+	'class-wp-booklet2-controller.php',
+	'class-wp-booklet2-pdf.php',
+	'class-wp-booklet2-theme.php',
+	'class-wp-booklet2-theme-manager.php',
+	'class-wp-booklet2-importer.php',
+	'class-wp-booklet2-booklet-editor.php',
+	'class-wp-booklet2-settings-page.php',
+	'class-wp-booklet2-importer-page.php'
+); 
+ 
+foreach( $wp_booklet_included_classes as $class ) {
+	
+	include WP_BOOKLET2_DIR . 'classes' . DIRECTORY_SEPARATOR . $class;
+	
+}
 
 /**
  * Initialize plugin

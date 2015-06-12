@@ -9,32 +9,20 @@ class WP_Booklet2_Theme_Manager {
 		
 		$this->_default_theme = 'light';
 		
-		$theme_locations = array(
-			array(
-				'theme_directory' => WP_BOOKLET2_DIR . "themes/booklet",
-				'theme_url' => WP_BOOKLET2_URL . "themes/booklet"
-			),
-			array(
-				'theme_directory' => get_stylesheet_directory() . "/wpbooklet",
-				'theme_url' => get_stylesheet_directory_uri() . "/wpbooklet"
-			)
-		);
+		$theme_locations = unserialize( WP_BOOKLET2_THEME_LOCATIONS );
 		
 		foreach( $theme_locations as $theme_location ) {
 			
 			if ( !is_dir( $theme_location['theme_directory'] ) ) { return; }
 			
-			$contents = scandir( $theme_location['theme_directory'] );
+			$themes = scandir( $theme_location['theme_directory'] );
 			
-			foreach ( $contents as $content ) {
+			foreach ( $themes as $theme ) {
 				
-				if ( is_dir( $theme_location['theme_directory'] . "/" . $content ) && $content != '.' && $content !== '..' ) {
+				if ( is_dir( $theme_location['theme_directory'] . DIRECTORY_SEPARATOR . $theme ) && $theme != '.' && $theme !== '..' ) {
 					
-					$theme = new WP_Booklet2_Theme($content);
-					$theme->set_directory( realpath( $theme_location['theme_directory'] . '/' . $content ) );
-					$theme->set_url( $theme_location['theme_url'] . '/' . $content );
-					
-					$this->_themes[$content] = $theme;
+					$theme_object = new WP_Booklet2_Theme($theme);
+					$this->_themes[$theme] = $theme_object;
 					
 				}
 				
@@ -73,4 +61,72 @@ class WP_Booklet2_Theme_Manager {
 	function theme_exists($theme) {
 		return array_key_exists( $theme, $this->_themes );
 	}
+	
+	/**
+	 * Set up theme dependencies
+	 *
+	 * @return void
+	 */
+	function setUpDependencies() {
+		
+		add_action( 'wp_enqueue_scripts', array( $this, 'include_frontend_scripts' ), 100);
+		
+	}
+	
+	/**
+	 * Enqueue front end scripts
+	 *
+	 * @return void
+	 */
+	function include_frontend_scripts() {
+		
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-widget' );
+		wp_enqueue_script( 'jquery-ui-mouse' );
+		wp_enqueue_script( 'jquery-ui-draggable' );
+		wp_enqueue_script( 'jquery-effects-core' );
+		
+		wp_register_script( 'jquery-wpbooklet', WP_BOOKLET2_URL . 'assets/js/jquery.wpbooklet.js' );
+		wp_register_script( 'jquery-wpbookletcarousel', WP_BOOKLET2_URL . 'assets/js/jquery.wpbookletcarousel.js' );
+		wp_register_script( 'jquery-wpbookletimagepopup', WP_BOOKLET2_URL . 'assets/js/jquery.wpbooklet-image-popup.min.js' );
+		
+		wp_enqueue_script( 'jquery-wpbooklet' );
+		wp_enqueue_script( 'jquery-wpbookletcarousel' );
+		wp_enqueue_script( 'jquery-wpbookletimagepopup' );
+		
+		foreach( $this->_themes as $theme ) {
+			
+			wp_enqueue_style( 'wp-booklet-' . $theme->get_name(), $theme->get_url() . "/booklet.css" );
+			
+		}
+		
+	}
+	
+	/**
+	 * Set up shortcode
+	 * 
+	 * @return void
+	 */
+	function setUpShortcode() {
+		
+		add_shortcode ( 'wp-booklet', array( $this, 'process_shortcode' ) );
+		
+	}
+	
+	/**
+	 * Process shortcode
+	 *
+	 * @return void
+	 */
+	function process_shortcode($atts) {
+		
+		extract( $atts );
+		
+		$booklet = new WP_Booklet2_Booklet($id);
+		
+		return $booklet->get_output();
+		
+	}
+	 
 }

@@ -1,3 +1,5 @@
+/* WP booklet editor */
+
 .wp-booklet-sortable {
 	margin-bottom:25px;
 }
@@ -111,12 +113,3 @@
 	height:45%;
 }
 
-/* Importer */
-
-.wp-booklet2_page_wp-booklet2-import .reimport-count {
-	display:none;
-}
-
-.wp-booklet2_page_wp-booklet2-import .importer-page-message {
-	display:none;
-}

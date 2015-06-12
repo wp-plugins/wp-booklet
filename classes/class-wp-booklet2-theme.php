@@ -8,28 +8,20 @@ class WP_Booklet2_Theme {
 	
 	function __construct($name) {
 		$this->_name = $name;	
-	}
-	
-	/**
-	 * Set directory
-	 *
-	 * @param string $directory - theme folder path
-	 *
-	 * @return void
-	 */
-	function set_directory($directory) {
-		$this->_directory = $directory;
-	}
-	
-	/**
-	 * Set URL
-	 *
-	 * @param string $url - theme URL
-	 *
-	 * @return void
-	 */
-	function set_url($url) {
-		$this->_url = $url;
+		
+		$theme_locations = unserialize( WP_BOOKLET2_THEME_LOCATIONS );
+		
+		foreach( $theme_locations as $theme_location ) {
+			
+			if ( is_dir( $theme_location['theme_directory'] . DIRECTORY_SEPARATOR . $this->_name ) ) {
+					
+				$this->_directory = $theme_location['theme_directory'] . DIRECTORY_SEPARATOR . $this->_name;
+				$this->_url = $theme_location['theme_url'] . '/' . $this->_name;
+				
+			}
+			
+		}
+		
 	}
 	
 	/**
@@ -65,7 +57,7 @@ class WP_Booklet2_Theme {
 	 * @return string
 	 */
 	function get_booklet_template_path() {
-		return realpath( $this->_directory . "/booklet.php" );
+		return realpath( $this->_directory . DIRECTORY_SEPARATOR . "booklet.php" );
 	}
 	
 }
