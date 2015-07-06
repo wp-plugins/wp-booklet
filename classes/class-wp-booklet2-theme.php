@@ -6,6 +6,13 @@ class WP_Booklet2_Theme {
 	private $_directory;
 	private $_url;
 	
+	/**
+	 * The constructor
+	 *
+	 * @param string $name - the name of the theme
+	 *
+	 * @return WP_Booklet2_Theme
+	 */
 	function __construct($name) {
 		$this->_name = $name;	
 		

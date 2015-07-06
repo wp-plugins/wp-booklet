@@ -5,6 +5,11 @@ class WP_Booklet2_Theme_Manager {
 	private $_themes;
 	private $_default_theme;
 	
+	/**
+	 * The constructor
+	 *
+	 * @return WP_Booklet2_Theme_Manager
+	 */
 	function __construct() {
 		
 		$this->_default_theme = 'light';

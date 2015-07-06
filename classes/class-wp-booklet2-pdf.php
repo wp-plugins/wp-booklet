@@ -9,7 +9,7 @@ class WP_Booklet2_PDF {
 	 *
 	 * @param $file string - path to the PDF file
 	 * 
-	 * @return void
+	 * @return WP_Booklet2_PDF
 	 */
 	function __construct( $file ) {
 

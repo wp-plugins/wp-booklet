@@ -9,7 +9,7 @@ class WP_Booklet2_Importer {
 	 *
 	 * @param int $limit - (optional) number of booklets to be imported each time the function runs. Defaults to 1 
 	 *
-	 * @return void
+	 * @return WP_Booklet2_Importer
 	 */
 	function __construct($limit=1) {
 		

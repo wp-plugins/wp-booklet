@@ -19,7 +19,14 @@ class WP_Booklet2_Booklet {
 	private $_theme;
 
 	protected $_pages;
-
+	
+	/**
+	 * The constructor
+	 *
+	 * @param int $id - booklet ID 
+	 *
+	 * @return WP_Booklet2_Booklet
+	 */
 	function __construct($id) {
 		
 		if ( get_post_type( $id ) == 'wp-booklet' ) {

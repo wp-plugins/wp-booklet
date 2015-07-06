@@ -7,7 +7,14 @@ class WP_Booklet2_Page {
 	private $_page_link;
 
 	protected $_meta;
-
+	
+	/**
+	 * The constructor
+	 *
+	 * @param int $id - the page ID
+	 *
+	 * @return WP_Booklet2_Page
+	 */
 	function __construct($id) {
 		
 		$this->_id = $id;

@@ -11,13 +11,17 @@ class WP_Booklet2_Command {
 	 * @param $command string - the command
 	 * @param $modifiers string - command arguments/options
 	 *
-	 * @return void
+	 * @return WP_Booklet2_Command
 	 */
 	function __construct( $command, $modifiers) {
 
 		$this->_command = $command;
 		$this->_modifiers = $modifiers;
-
+		
+		if ( !$this->_can_run_exec() ) {
+			throw new Exception("Running external programs is disabled");
+		}
+		
 		if ( !$this->_command_exists() ) {
 			throw new Exception("Command or program doesn't exist");
 		}
@@ -58,6 +62,17 @@ class WP_Booklet2_Command {
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Checks if 'exec' is executable
+	 *
+	 * @return bool;
+	 */
+	protected function _can_run_exec() {
+		return 	function_exists('exec') &&
+				!in_array('exec', array_map('trim', explode(', ', ini_get('disable_functions')))) &&
+				strtolower(ini_get('safe_mode')) != 1;
 	}
 
 }
