@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Booklet
  * Description: Allows creation of flip books using the jQuery Booklet plugin. Successor to WP Booklet 1.x
- * Version: 2.0.8
+ * Version: 2.0.9
  * Author: BinaryStash
  * Author URI:  http://www.binarystash.net
  * License: GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -121,8 +121,8 @@ function wp_booklet2_instantiate() {
 	new WP_Booklet2_Controller();
 }
 
-if ( get_bloginfo("version") >= 3.5 ) {
-	//Initialize plugin only if Wordpress version >= 3.5
+if ( get_bloginfo("version") >= 3.9 ) {
+	//Initialize plugin only if Wordpress version >= 3.9
 	add_action( 'plugins_loaded', 'wp_booklet2_instantiate', 15 );
 }
 

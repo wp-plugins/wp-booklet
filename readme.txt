@@ -4,7 +4,7 @@ Donate link: http://www.binarystash.com
 Tags: flip book, flipbook, booklet
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,10 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 5. Booklet editor 
 
 == Changelog ==
+
+= 2.0.9 =
+* Buttons to auto-calculate optimal booklet dimensions were added.
+* Shortcode display now auto-selects the text when clicked.
 
 = 2.0.8 =
 * Added checking for 'exec'
@@ -171,6 +175,10 @@ On the media gallery popup, hold "CTRL" on your keyboard while selecting images.
 * Stable version
 
 == Upgrade Notice ==
+
+= 2.0.9 =
+* Buttons to auto-calculate optimal booklet dimensions were added.
+* Shortcode display now auto-selects the text when clicked.
 
 = 2.0.8 =
 * Added checking for 'exec'

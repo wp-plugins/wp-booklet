@@ -88,6 +88,12 @@
 	display:none;
 }
 
+.wp-booklet-property-note {
+	font-size:10px;
+	font-style:italic;
+	display:block;
+}
+
 .wp-booklet-portlet-hidden .wp-booklet-portlet-content {
 	display:none;
 }

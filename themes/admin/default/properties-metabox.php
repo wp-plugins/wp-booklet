@@ -1,10 +1,12 @@
 <p>
-	<label>Actual page width</label><br/>
+	<label>Optimal page width</label><br/>
 	<input size="18" type="text" name="wp-booklet-metas[wp-booklet-width]" value="<?php echo $booklet->get_width()  ?>"/> pixels
+	<a href="#" class="wp-booklet-property-note wp-booklet-property-calculate-width">Auto-calculate</a>
 </p>
 <p>
-	<label>Actual page height</label><br/>
+	<label>Optimal page height</label><br/>
 	<input size="18" type="text" name="wp-booklet-metas[wp-booklet-height]" value="<?php echo $booklet->get_height() ?>"/> pixels
+	<a href="#" class="wp-booklet-property-note wp-booklet-property-calculate-height">Auto-calculate</a>
 </p>
 <p>
 	<label>Page Padding</label><br/>
@@ -17,7 +19,7 @@
 <p>
 	<label>Automatic flip delay</label><br/>
 	<input size="18" type="text" name="wp-booklet-metas[wp-booklet-delay]" value="<?php echo $booklet->get_delay() ?>"/> milliseconds<br/>
-	<span style="font-size:10px;font-style:italic">Set to 0 for manual flipping.</span>
+	<span class="wp-booklet-property-note">Set to 0 for manual flipping.</span>
 </p>
 <p>
 	<label>Page direction</label>

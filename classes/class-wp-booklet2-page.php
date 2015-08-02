@@ -43,6 +43,37 @@ class WP_Booklet2_Page {
 		return $image_attributes[0];
 
 	}
+	
+	/**
+	 * Get actual page width. This is the same as the width of the 'full' image size.
+	 *
+	 * @return int
+	 */
+	function get_actual_width() {
+		
+		$file_path = get_attached_file( $this->_image_id );
+		
+		$size = getimagesize( $file_path );
+		
+		return $size[0];
+		
+	}
+	
+	/**
+	 * Get actual page height. This is the same as the height of the 'full' image size.
+	 *
+	 * @return int
+	 */
+	function get_actual_height() {
+		
+		$file_path = get_attached_file( $this->_image_id );
+		
+		$size = getimagesize( $file_path );
+		
+		return $size[1];
+		
+	}
+	 
 
 	/**
 	 * Get page link

@@ -137,8 +137,14 @@ class WP_Booklet2_PDF {
 			//Create attachment metadata
 			$attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
 			$meta = wp_update_attachment_metadata( $attach_id, $attach_data );
+			$size = getimagesize($filename);
 			
-			$images[] = array('id'=>$attach_id,'src'=>$upload_dir['url'] . '/' . basename( $filename ));
+			$images[] = array(
+				'id'=>$attach_id,
+				'src'=>$upload_dir['url'] . '/' . basename( $filename ),
+				'width'=>$size[0],
+				'height'=>$size[1]
+			);
 
 		}
 

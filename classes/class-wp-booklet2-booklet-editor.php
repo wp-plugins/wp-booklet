@@ -36,18 +36,19 @@ class WP_Booklet2_Booklet_Editor {
 	function include_admin_scripts($hook_suffix) {
 		
 		if ( get_bloginfo("version") >= 3.8 ) {
-			wp_enqueue_style( 'wpbooklet-booklet-editor-gt-3.8', WP_BOOKLET2_URL . '/themes/admin/default/css/booklet-editor-3.8.css' );
+			wp_enqueue_style( 'wpbooklet-booklet-editor-gt-3.8', WP_BOOKLET2_URL . 'themes/admin/default/css/booklet-editor-3.8.css' );
 		}
 		
-		if ( get_post_type() != 'wp-booklet2' ) { return; }
+		if ( get_post_type() != 'wp-booklet2' && $hook_suffix != 'post.php' ) { return; }
 		
-		wp_enqueue_style( 'wpbooklet-booklet-editor', WP_BOOKLET2_URL . '/themes/admin/default/css/booklet-editor.css' );
+		wp_enqueue_style( 'wpbooklet-booklet-editor', WP_BOOKLET2_URL . 'themes/admin/default/css/booklet-editor.css' );
 		
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_dequeue_script( 'autosave' );
-		
 		wp_enqueue_media();
+		
+		wp_enqueue_script('wpbooklet-booklet-editor', WP_BOOKLET2_URL . 'assets/js/wpbooklet-editor.js');
 		
 	}
 	

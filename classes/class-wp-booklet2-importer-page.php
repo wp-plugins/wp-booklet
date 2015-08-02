@@ -25,7 +25,10 @@ class WP_Booklet2_Importer_Page {
 		
 		wp_enqueue_script('jquery');
 		
-		wp_enqueue_style( 'wpbooklet-importer-css', WP_BOOKLET2_URL . '/themes/admin/default/css/importer.css' );
+		if ( $hook_suffix == 'wp-booklet2_page_wp-booklet2-import' ) {
+			wp_enqueue_style( 'wpbooklet-importer-css', WP_BOOKLET2_URL . 'themes/admin/default/css/importer.css' );
+			wp_enqueue_script( 'wpbooklet-importer-js', WP_BOOKLET2_URL . 'assets/js/wpbooklet-importer-page.js' );
+		}
 		
 	}
 	
